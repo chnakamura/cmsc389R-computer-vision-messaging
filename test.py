@@ -4,8 +4,10 @@ s3 = boto3.resource('s3')
 
 bucket = s3.Bucket('computer-vision-messaging')
 
-data = open('test.jpg','rb')
-bucket.put_object(Key='test.jpg', Body=data)
+if s3.Object('vision','test.jpg') is None:
+
+    data = open('test.jpg','rb')
+    bucket.put_object(Key='test.jpg', Body=data)
 
 client = boto3.client('rekognition')
 response = client.detect_labels(
@@ -17,4 +19,5 @@ response = client.detect_labels(
     }
 )
 
-print response['Labels']
+passwd = response['Labels'][-1]['Name']
+print passwd
