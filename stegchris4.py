@@ -2,7 +2,7 @@ from PIL import Image
 import time, argparse, hashlib
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-m", help="message to encode")
+parser.add_argument("-m", help="message to encode (not including will instead decode the image)")
 parser.add_argument("-f", help="image path")
 parser.add_argument("-c", help="color field to store image in (r,g,b,a)")
 parser.add_argument("-p", help="passphrase")
