@@ -4,7 +4,7 @@ import time, argparse, hashlib
 parser = argparse.ArgumentParser()
 parser.add_argument("-m", help="message to encode")
 parser.add_argument("-f", help="image path")
-parser.add_argument("-c", help="color field to store image in")
+parser.add_argument("-c", help="color field to store image in (r,g,b,a)")
 parser.add_argument("-p", help="passphrase")
 args = parser.parse_args()
 
