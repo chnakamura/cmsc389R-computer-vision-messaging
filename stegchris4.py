@@ -14,6 +14,15 @@ if args.p is None:
     exit("Need to specify passphrase")
 if args.c is None:
     args.c = 0
+else:
+    if args.c == 'r':
+        args.c = 0
+    elif args.c == 'g':
+        args.c = 1
+    elif args.c == 'b':
+        args.c = 2
+    elif args.c == 'a':
+        args.c = 4
 
 h = hashlib.sha256()
 h.update(args.p)
