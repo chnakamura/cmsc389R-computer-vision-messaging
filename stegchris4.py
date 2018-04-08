@@ -22,8 +22,6 @@ hashed_passphrase = h.hexdigest()
 im = Image.open(args.f, 'r')
 width,height = im.size
 
-print hashed_passphrase
-
 def encode_message(msg = "Hello World!"):
 
     i = 0
@@ -34,7 +32,7 @@ def encode_message(msg = "Hello World!"):
 
                 sigma = 0
 
-                s_index = int(hashed_passphrase[i:i+2],base=16)
+                s_index = int(hashed_passphrase[(2*i)%64:(2*i%64)+2],base=16)
                 s_index_x = x + int(s_index / 16)
                 s_index_y = y + int(s_index % 16)
 
@@ -55,12 +53,6 @@ def encode_message(msg = "Hello World!"):
 
                 r,g,b,a = im.getpixel((s_index_x, s_index_y + 1))
                 im.putpixel((s_index_x, s_index_y + 1),(beta,g,b,a))
-
-                print mean
-                print(s_index_x, s_index_y)
-                print im.getpixel((s_index_x, s_index_y)),im.getpixel((s_index_x, s_index_y + 1))
-
-                time.sleep(.1)
             
             else:
 
@@ -79,7 +71,7 @@ def decode_message():
 
                 sigma = 0
 
-                s_index = int(hashed_passphrase[i:i+2],base=16)
+                s_index = int(hashed_passphrase[(2*i)%64:(2*i%64)+2],base=16)
                 s_index_x = x + int(s_index / 16)
                 s_index_y = y + int(s_index % 16)
 
@@ -94,12 +86,10 @@ def decode_message():
                 alpha = im.getpixel((s_index_x, s_index_y))[0] - mean
                 beta = im.getpixel((s_index_x, s_index_y + 1))[0] - mean
 
-                print mean
-                print(s_index_x, s_index_y)
-                print im.getpixel((s_index_x, s_index_y)),im.getpixel((s_index_x, s_index_y + 1))
-
-                c = chr((alpha * 16) + beta)
-                print(c, end="")
+                try:
+                    msg += chr((alpha * 16) + beta)
+                except ValueError:
+                    return msg
 
                 i += 1
 
